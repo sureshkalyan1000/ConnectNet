@@ -7,7 +7,7 @@ namespace ConnectNet.Extensions
 {
     public static class AddApplicationServices
     {
-        public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config) 
+        public static IServiceCollection AddApplicationService(this IServiceCollection services, IConfiguration config)
         {
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
@@ -16,6 +16,8 @@ namespace ConnectNet.Extensions
             Options.UseSqlServer(config.GetConnectionString("devconnection")));
 
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IUserRepository,UserRepository>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             return services;
         }

@@ -3,7 +3,6 @@ using ConnectNet.IRepository;
 using ConnectNet.Models;
 using ConnectNet.Models.DTOs;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
@@ -19,7 +18,7 @@ namespace ConnectNet.Controllers
         private readonly DataContext context;
         private readonly ITokenService tokenService;
 
-        public AccountController(DataContext context,ITokenService tokenService)
+        public AccountController(DataContext context, ITokenService tokenService)
         {
             this.context = context;
             this.tokenService = tokenService;
@@ -37,10 +36,10 @@ namespace ConnectNet.Controllers
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password)),
                 PasswordSalt = hmac.Key
             };
-            await context.appUsers.AddAsync(AppUser);
+            await context.AppUsers.AddAsync(AppUser);
             await context.SaveChangesAsync();
-            return Ok(new UserDTO 
-            { 
+            return Ok(new UserDTO
+            {
                 username = AppUser.UserName,
                 token = tokenService.GetTokenAsync(AppUser)
             });
@@ -48,13 +47,13 @@ namespace ConnectNet.Controllers
 
         [HttpPost("Login")]
         [AllowAnonymous]
-        public async Task<ActionResult<UserDTO>> login (RegisterDTO registerDTO)
+        public async Task<ActionResult<UserDTO>> login(RegisterDTO registerDTO)
         {
-            var user = await context.appUsers.FirstOrDefaultAsync(x => x.UserName==registerDTO.userName);
+            var user = await context.AppUsers.FirstOrDefaultAsync(x => x.UserName == registerDTO.userName);
             if (user == null) { return Unauthorized("user is not exist"); }
             using var hmac = new HMACSHA512(user.PasswordSalt);
             var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.password));
-            for (var i = 0; i < registerDTO.password.Length; i++) 
+            for (var i = 0; i < registerDTO.password.Length; i++)
             {
                 if (computeHash[i] != user.PasswordHash[i]) { return BadRequest("invalid password"); }
             }
@@ -68,11 +67,11 @@ namespace ConnectNet.Controllers
         [Route("GetUser")]
         public async Task<List<AppUser>> GetUser()
         {
-            return await context.appUsers.ToListAsync();
+            return await context.AppUsers.ToListAsync();
         }
         private async Task<bool> exist(string username)
         {
-            return await context.appUsers.AnyAsync(x => x.UserName == username.ToLower());
+            return await context.AppUsers.AnyAsync(x => x.UserName == username.ToLower());
         }
     }
 }

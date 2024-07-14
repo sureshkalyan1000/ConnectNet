@@ -135,3 +135,6 @@ C:\Users\User\source\repos\ConnectNet\obj\Debug\net8.0\ConnectNet.pdb
 C:\Users\User\source\repos\ConnectNet\obj\Debug\net8.0\ConnectNet.genruntimeconfig.cache
 C:\Users\User\source\repos\ConnectNet\obj\Debug\net8.0\ref\ConnectNet.dll
 C:\Users\User\source\repos\ConnectNet\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\User\source\repos\ConnectNet\bin\Debug\net8.0\Migrations\UserSeedData.json
+C:\Users\User\source\repos\ConnectNet\bin\Debug\net8.0\AutoMapper.dll
+C:\Users\User\source\repos\ConnectNet\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

@@ -1,6 +1,5 @@
 ﻿using ConnectNet.IRepository;
 using ConnectNet.Models;
-using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -12,7 +11,7 @@ namespace ConnectNet.Repository
     {
         private readonly IConfiguration config;
         private readonly SymmetricSecurityKey secretKey;
-        public TokenService(IConfiguration config) 
+        public TokenService(IConfiguration config)
         {
             this.secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["key"]));
         }
@@ -22,7 +21,7 @@ namespace ConnectNet.Repository
             {
                 new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Name, appuser.UserName)
             };
-            var cred = new SigningCredentials(secretKey,SecurityAlgorithms.HmacSha256Signature);
+            var cred = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature);
             var TokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
@@ -32,7 +31,7 @@ namespace ConnectNet.Repository
             var TokenHandler = new JwtSecurityTokenHandler();
             var token = TokenHandler.CreateToken(TokenDescriptor);
             return TokenHandler.WriteToken(token);
-            
+
         }
     }
 }

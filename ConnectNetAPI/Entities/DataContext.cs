@@ -8,6 +8,6 @@ namespace ConnectNet.Entities
         public DataContext(DbContextOptions options) : base(options)
         {
         }
-        public DbSet<AppUser> appUsers { get; set; }
+        public DbSet<AppUser> AppUsers { get; set; }
     }
 }

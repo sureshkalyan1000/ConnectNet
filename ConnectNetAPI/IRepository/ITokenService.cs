@@ -6,4 +6,4 @@ namespace ConnectNet.IRepository
     {
         public string GetTokenAsync(AppUser appuser);
     }
-}   
+}
